@@ -7,7 +7,7 @@ env:
   TF_CLOUD_ORGANIZATION: "brodul"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "spork-prod"
-  CONFIG_DIRECTORY: "./infrastructure/environments/prod/"
+  CONFIG_DIRECTORY: "./infrastructure/"
 
 jobs:
   terraform:

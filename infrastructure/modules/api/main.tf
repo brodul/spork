@@ -74,7 +74,7 @@ resource "aws_apprunner_service" "spork" {
       image_configuration {
         port = "80"
       }
-      image_identifier      = "${aws_ecr_repository.spork.repository_url}:78115f2d7700006771ae5da0228dc431a933eb8a"
+      image_identifier      = aws_ecr_repository.spork.repository_url
       image_repository_type = "ECR"
     }
     auto_deployments_enabled = true

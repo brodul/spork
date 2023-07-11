@@ -14,7 +14,7 @@ terraform {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository
 resource "aws_ecr_repository" "spork" {
   name                 = "spork-app"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE"
 }
 
 ###
@@ -74,7 +74,7 @@ resource "aws_apprunner_service" "spork" {
       image_configuration {
         port = "80"
       }
-      image_identifier      = "${aws_ecr_repository.spork.repository_url}:78115f2d7700006771ae5da0228dc431a933"
+      image_identifier      = "${aws_ecr_repository.spork.repository_url}:latest"
       image_repository_type = "ECR"
     }
     auto_deployments_enabled = true

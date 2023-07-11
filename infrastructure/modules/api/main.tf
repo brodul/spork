@@ -28,7 +28,7 @@ resource "aws_iam_role" "apprunner_role" {
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
-    Version = "2008-10-17"
+    Version = "2012-10-17"
     Statement = [
       {
         Action = "sts:AssumeRole"
@@ -48,7 +48,7 @@ resource "aws_iam_role" "apprunner_role" {
       Version = "2012-10-17"
       Statement = [
         {
-          Action   = ["ecr:*"]
+          Action   = ["ecr:*", "iam:CreateServiceLinkedRole"]
           Effect   = "Allow"
           Resource = "*"
         },
@@ -74,7 +74,7 @@ resource "aws_apprunner_service" "spork" {
       image_configuration {
         port = "80"
       }
-      image_identifier      = "${aws_ecr_repository.spork.repository_url}:latest"
+      image_identifier      = "${aws_ecr_repository.spork.repository_url}:78115f2d7700006771ae5da0228dc431a933eb8a"
       image_repository_type = "ECR"
     }
     auto_deployments_enabled = true

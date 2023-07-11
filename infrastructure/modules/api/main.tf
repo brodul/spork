@@ -7,6 +7,9 @@ terraform {
   }
 }
 
+###
+# ECR
+###
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository
 resource "aws_ecr_repository" "spork" {
@@ -14,9 +17,57 @@ resource "aws_ecr_repository" "spork" {
   image_tag_mutability = "IMMUTABLE"
 }
 
+###
+# Apprunner service
+###
+
+
+resource "aws_iam_role" "apprunner_role" {
+  name = "apprunner"
+
+  # Terraform's "jsonencode" function converts a
+  # Terraform expression result to valid JSON syntax.
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "build.apprunner.amazonaws.com"
+        }
+      },
+    ]
+  })
+
+  inline_policy {
+    name = "access_ecr"
+
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action   = ["ecr:*"]
+          Effect   = "Allow"
+          Resource = "*"
+        },
+      ]
+    })
+  }
+
+
+  tags = {
+  }
+}
+
 
 resource "aws_apprunner_service" "spork" {
   service_name = "spork"
+
+  authentication_configuration {
+    access_role_arn = aws_iam_role.apprunner_role.arn
+  }
 
   source_configuration {
     image_repository {
@@ -30,6 +81,5 @@ resource "aws_apprunner_service" "spork" {
   }
 
   tags = {
-    Name = "example-apprunner-service"
   }
 }

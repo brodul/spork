@@ -65,11 +65,11 @@ resource "aws_iam_role" "apprunner_role" {
 resource "aws_apprunner_service" "spork" {
   service_name = "spork"
 
-  authentication_configuration {
-    access_role_arn = aws_iam_role.apprunner_role.arn
-  }
 
   source_configuration {
+    authentication_configuration {
+      access_role_arn = aws_iam_role.apprunner_role.arn
+    }
     image_repository {
       image_configuration {
         port = "80"

@@ -1,3 +1,39 @@
+resource "aws_s3_bucket" "pipeline" {
+  bucket = "${var.service_name}-codepipeline-bucket"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "${var.service_name}Codepipeline",
+  "Statement": [
+        {
+            "Sid": "DenyUnEncryptedObjectUploads",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::${var.service_name}-codepipeline-bucket/*",
+            "Condition": {
+                "StringNotEquals": {
+                    "s3:x-amz-server-side-encryption": "aws:kms"
+                }
+            }
+        },
+        {
+            "Sid": "DenyInsecureConnections",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::${var.service_name}-codepipeline-bucket/*",
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "false"
+                }
+            }
+        }
+    ]
+}
+POLICY
+}
 
 data "aws_iam_policy_document" "assume_by_pipeline" {
   statement {

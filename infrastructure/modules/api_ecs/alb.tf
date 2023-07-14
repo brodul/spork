@@ -1,6 +1,6 @@
 locals {
   target_groups = ["primary", "secondary"]
-  hosts_name    = ["*.yourdomain.com"] #example : fill your information
+  hosts_name    = ["spork.brodul.org"] # TODO: var
 }
 
 resource "aws_security_group" "alb" {
@@ -72,9 +72,8 @@ resource "aws_lb_listener_rule" "this" {
     target_group_arn = aws_lb_target_group.this.*.arn[count.index]
   }
 
-  # TODO
-  # condition {
-  #   field  = "host-header"
-  #   values = local.hosts_name
-  # }
+  condition {
+    field  = "host-header"
+    values = local.hosts_name
+  }
 }

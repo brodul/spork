@@ -4,12 +4,10 @@ module "api" {
 }
 
 
-output "ecr_url" {
-  value = module.api.ecr_url
-  count = 0
-}
+# output "ecr_url" {
+#   value = module.api.ecr_url
+# }
 
-output "service_url" {
-  value = module.api.service_url
-  count = 0
-}
+# output "service_url" {
+#   value = module.api.service_url
+# }

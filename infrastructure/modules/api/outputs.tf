@@ -1,5 +1,5 @@
 output "ecr_url" {
-  value = aws_ecr_repository.spork.repository_url
+  value = aws_ecr_repository.spork_2.repository_url
 }
 
 output "service_url" {

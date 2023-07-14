@@ -24,5 +24,5 @@ resource "aws_ecs_service" "this" {
     assign_public_ip = true
   }
 
-  depends_on = ["aws_lb_listener.this"]
+  depends_on = [aws_lb_listener.this]
 }

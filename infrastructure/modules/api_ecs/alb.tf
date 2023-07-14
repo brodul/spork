@@ -75,7 +75,7 @@ resource "aws_lb_listener_rule" "this" {
   condition {
 
     host_header {
-      values = [local.hosts_name]
+      values = local.hosts_name
     }
   }
 }

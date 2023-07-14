@@ -18,6 +18,8 @@ resource "aws_iam_role" "ecr" {
 
 resource "aws_ecr_repository" "this" {
   name = var.service_name
+
+  force_delete = true
 }
 
 resource "aws_ecr_repository_policy" "this" {

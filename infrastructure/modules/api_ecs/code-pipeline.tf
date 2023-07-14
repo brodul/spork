@@ -135,6 +135,11 @@ resource "aws_codepipeline" "this" {
   name     = "${var.service_name}-pipeline"
   role_arn = aws_iam_role.pipeline.arn
 
+  artifact_store {
+    location = "${var.service_name}-codepipeline-bucket"
+    type     = "S3"
+  }
+
   stage {
     name = "Source"
 

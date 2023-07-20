@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "this" {
-  name = var.service_name
+  name = "${var.service_name}-image"
 
   force_delete = true
 }

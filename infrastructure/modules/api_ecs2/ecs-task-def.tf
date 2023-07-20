@@ -3,8 +3,8 @@ resource "aws_ecs_task_definition" "this" {
   execution_role_arn       = aws_iam_role.execution_role.arn
   task_role_arn            = aws_iam_role.task_role.arn
   network_mode             = "awsvpc"
-  cpu                      = 2000
-  memory                   = 1000 # TODO
+  cpu                      = 1024
+  memory                   = 2048
   requires_compatibilities = ["FARGATE"]
   # "nginx" is just a placeholder
   container_definitions = <<DEFINITION

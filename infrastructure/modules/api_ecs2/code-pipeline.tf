@@ -152,7 +152,7 @@ resource "aws_codepipeline" "this" {
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        RepositoryName = aws_codecommit_repository.this.name
+        RepositoryName = aws_codecommit_repository.this.repository_name
         BranchName     = "main"
       }
     }

@@ -22,7 +22,7 @@ resource "aws_ecs_service" "this" {
   network_configuration {
     subnets          = aws_subnet.public[*].id
     assign_public_ip = true
-    security_groups  = [aws_security_group.ecs.name]
+    security_groups  = [aws_security_group.ecs.id]
   }
 
   depends_on = [aws_lb_listener.this]

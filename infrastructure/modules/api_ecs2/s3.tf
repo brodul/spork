@@ -3,6 +3,13 @@ resource "aws_s3_bucket" "this" {
 
 }
 
+resource "aws_s3_bucket_versioning" "this" {
+  bucket = aws_s3_bucket.this.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_object" "appspec_yaml" {
   bucket  = aws_s3_bucket.this.bucket
   key     = "appspec.yml"

@@ -1,6 +1,6 @@
 resource "aws_ecs_service" "this" {
   name            = var.service_name
-  task_definition = aws_ecs_task_definition.this.id
+  task_definition = aws_ecs_task_definition.this.arn
   cluster         = aws_ecs_cluster.this.arn
 
   load_balancer {

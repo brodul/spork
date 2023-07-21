@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "this" {
 
 resource "aws_s3_object" "appspec_yaml" {
   bucket  = aws_s3_bucket.this.bucket
-  key     = "appspec.yaml"
+  key     = "appspec.yml"
   content = <<-EOT
     version: 0.0
     Resources:

@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "this" {
-  family                   = var.service_name
+  family                   = "${var.service_name}-td"
   execution_role_arn       = aws_iam_role.execution_role.arn
   task_role_arn            = aws_iam_role.task_role.arn
   network_mode             = "awsvpc"

@@ -29,7 +29,7 @@ resource "aws_ecs_service" "this" {
 
   lifecycle {
     ignore_changes = [
-      load_balancer.target_group_arn,
+      load_balancer,
       task_definition
     ]
   }

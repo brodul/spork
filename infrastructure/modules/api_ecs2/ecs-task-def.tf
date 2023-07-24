@@ -34,8 +34,4 @@ resource "aws_ecs_task_definition" "this" {
 ]
 DEFINITION
 
-  lifecycle {
-    create_before_destroy = true
-  }
-
 }

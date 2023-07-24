@@ -26,4 +26,12 @@ resource "aws_ecs_service" "this" {
   }
 
   depends_on = [aws_lb_listener.this]
+
+  lifecycle {
+    ignore_changes = [
+      load_balancer.target_group_arn,
+      task_definition
+    ]
+  }
+
 }

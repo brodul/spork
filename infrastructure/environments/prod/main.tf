@@ -10,6 +10,16 @@ terraform {
     }
   }
   required_version = ">= 1.1.0"
+
+  cloud {
+    organization = "brodul"
+    hostname     = "app.terraform.io" # Optional; defaults to app.terraform.io
+
+    workspaces {
+      tags = ["spork", "prod"]
+    }
+  }
+
 }
 
 provider "aws" {

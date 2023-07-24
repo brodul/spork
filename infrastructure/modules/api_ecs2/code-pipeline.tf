@@ -76,6 +76,22 @@ data "aws_iam_policy_document" "pipeline" {
   }
 
   statement {
+    sid    = "AllowCodeCommit"
+    effect = "Allow"
+
+    actions = [
+      "codecommit:ListBranches",
+      "codecommit:GetReferences",
+      "codecommit:ListRepositories",
+      "codecommit:GetBranch",
+      "codecommit:GetCommit",
+      "codecommit:UploadArchive",
+      "codecommit:GetUploadArchiveStatus"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
     sid    = "AllowCodebuild"
     effect = "Allow"
 

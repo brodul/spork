@@ -21,8 +21,8 @@ resource "aws_s3_object" "appspec_yaml" {
         Properties:
             TaskDefinition: <TASK_DEFINITION>
             LoadBalancerInfo:
-            ContainerName: "${var.service_name}"
-            ContainerPort: ${var.container_port}
+                ContainerName: "${var.service_name}"
+                ContainerPort: ${var.container_port}
   EOT
 }
 
@@ -32,6 +32,7 @@ resource "aws_s3_object" "taskdef_json" {
   content = <<-EOT
     {
         "taskDefinitionArn": "${aws_ecs_task_definition.this.arn}",
+        "executionRoleArn": "${aws_iam_role.execution_role.arn}",
         "containerDefinitions": [
             {
                 "name": "${var.service_name}",

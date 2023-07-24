@@ -144,30 +144,16 @@ resource "aws_codepipeline" "this" {
     name = "Source"
 
     action {
-      name             = "AppSpecS3"
+      name             = "SourceTemplates"
       category         = "Source"
       owner            = "AWS"
-      provider         = "S3"
+      provider         = "CodeCommit"
       version          = "1"
-      output_artifacts = ["AppSpec"]
+      output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        S3Bucket    = aws_s3_bucket.this.bucket
-        S3ObjectKey = aws_s3_object.appspec_yaml.key
-      }
-    }
-
-    action {
-      name             = "TaskDefS3"
-      category         = "Source"
-      owner            = "AWS"
-      provider         = "S3"
-      version          = "1"
-      output_artifacts = ["TaskDef"]
-
-      configuration = {
-        S3Bucket    = aws_s3_bucket.this.bucket
-        S3ObjectKey = aws_s3_object.taskdef_json.key
+        RepositoryName = aws_codecommit_repository.this.repository_name
+        BranchName     = "main"
       }
     }
 
@@ -195,15 +181,15 @@ resource "aws_codepipeline" "this" {
       category        = "Deploy"
       owner           = "AWS"
       provider        = "CodeDeployToECS"
-      input_artifacts = ["TaskDef", "AppSpec"]
+      input_artifacts = ["SourceArtifact", "MyImage"]
       version         = "1"
 
       configuration = {
         ApplicationName                = "${var.service_name}-service-deploy"
         DeploymentGroupName            = "${var.service_name}-service-deploy-group"
-        TaskDefinitionTemplateArtifact = "TaskDef"
+        TaskDefinitionTemplateArtifact = "SourceArtifact"
         TaskDefinitionTemplatePath     = "taskdef.json"
-        AppSpecTemplateArtifact        = "AppSpec"
+        AppSpecTemplateArtifact        = "SourceArtifact"
         AppSpecTemplatePath            = "appspec.yml"
         Image1ArtifactName             = "MyImage"
         Image1ContainerName            = "IMAGE1_NAME"
